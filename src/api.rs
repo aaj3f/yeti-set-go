@@ -10,6 +10,14 @@ const API_BASE_URL: &str = "https://data.flur.ee/fluree";
 const TIMEOUT_SECONDS: u64 = 5;
 
 fn get_api_key() -> Result<String, ApiError> {
+    // Try compile-time embedded key first
+    if let Some(key) = option_env!("FLUREE_API_KEY") {
+        if !key.is_empty() {
+            return Ok(key.to_string());
+        }
+    }
+
+    // Fall back to runtime environment variable
     env::var("FLUREE_API_KEY").map_err(|_| ApiError::MissingApiKey)
 }
 
@@ -143,7 +151,10 @@ impl std::fmt::Display for ApiError {
             ApiError::ServerError(code) => write!(f, "Server error: {}", code),
             ApiError::ParseError(msg) => write!(f, "Parse error: {}", msg),
             ApiError::Disabled => write!(f, "API disabled"),
-            ApiError::MissingApiKey => write!(f, "Missing API key: set FLUREE_API_KEY environment variable"),
+            ApiError::MissingApiKey => write!(
+                f,
+                "Missing API key: set FLUREE_API_KEY environment variable"
+            ),
         }
     }
 }
@@ -179,7 +190,7 @@ pub async fn submit_score_with_fallback(
     match api_client.submit_score(high_score).await {
         Ok(()) => {
             println!("Score submitted successfully to remote API");
-            
+
             // Re-query the leaderboard to get updated state from API
             match api_client.fetch_leaderboard().await {
                 Ok(remote_scores) => {
@@ -190,7 +201,7 @@ pub async fn submit_score_with_fallback(
                     println!("Failed to update leaderboard after submission: {}", e);
                 }
             }
-            
+
             true
         }
         Err(e) => {
