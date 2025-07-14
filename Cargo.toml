@@ -7,7 +7,7 @@ repository = "https://github.com/aaj3f/yeti-set-go"
 [dependencies]
 macroquad = "0.4"
 rand = "0.8"
-reqwest = { version = "0.11", features = ["json"] }
+reqwest = { version = "0.11", features = ["json", "rustls-tls"] }
 serde = { version = "1.0", features = ["derive"] }
 tokio = { version = "1.0", features = ["rt-multi-thread"] }
 chrono = { version = "0.4", features = ["serde"] }
