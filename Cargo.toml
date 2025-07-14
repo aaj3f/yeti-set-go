@@ -1,6 +1,6 @@
 [package]
 name = "yeti-set-go"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 repository = "https://github.com/aaj3f/yeti-set-go"
 include = [
@@ -14,9 +14,14 @@ include = [
 [dependencies]
 macroquad = "0.4"
 rand = "0.8"
-reqwest = { version = "0.11", default-features = false, features = ["json", "rustls-tls"] }
+reqwest = { version = "0.11", default-features = false, features = [
+    "json",
+    "rustls-tls",
+] }
 serde = { version = "1.0", features = ["derive"] }
-tokio = { version = "1.0", default-features = false, features = ["rt-multi-thread"] }
+tokio = { version = "1.0", default-features = false, features = [
+    "rt-multi-thread",
+] }
 chrono = { version = "0.4", features = ["serde"] }
 serde_json = "1.0.140"
 
