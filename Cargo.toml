@@ -3,6 +3,13 @@ name = "yeti-set-go"
 version = "0.1.0"
 edition = "2021"
 repository = "https://github.com/aaj3f/yeti-set-go"
+include = [
+    "src/**/*",
+    "generated_assets/**/*",
+    "Cargo.toml",
+    "README.md",
+    "LICENSE*",
+]
 
 [dependencies]
 macroquad = "0.4"
